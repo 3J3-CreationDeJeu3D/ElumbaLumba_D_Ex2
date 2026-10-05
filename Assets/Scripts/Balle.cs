@@ -37,6 +37,7 @@ public class Balle : MonoBehaviour
     [Header("UI")]
     [SerializeField] TMP_Text textePoints;
 
+
     void Start()
     {
         rigidbodyBalle = GetComponent<Rigidbody>();
@@ -56,7 +57,12 @@ public class Balle : MonoBehaviour
 
     void Update()
     {
+
         if (peutJouer == true && GestJeu.instance.etat == EtatJeu.Jeu)
+
+
+       if (peutJouer == true && GestJeu.instance.etat == EtatJeu.Jeu)
+
         {
             float inputRotation = tournerAction.ReadValue<float>();
             angleTir += inputRotation;
@@ -125,11 +131,15 @@ public class Balle : MonoBehaviour
             audioSourceBalle.PlayOneShot(sonErreur);
             GestJeu.instance.FinJeu();
         }
+
     }
 
     void OnTriggerEnter(Collider collision)
     {
+
         if (collision.gameObject.tag == "trou")
+
+        if(collision.gameObject.tag == "trou")
         {
             rigidbodyBalle.linearVelocity = Vector3.zero;
             rigidbodyBalle.useGravity = false;
@@ -141,6 +151,8 @@ public class Balle : MonoBehaviour
             PlayerPrefs.DeleteKey("positionBalle");
             StartCoroutine(GestJeu.instance.FinJeu());
         }
+
+
     }
 
     void FrapperBalle()
@@ -163,6 +175,7 @@ public class Balle : MonoBehaviour
     {
         tirAction.Enable();
         tournerAction.Enable();
+
     }
 
     void OnDisable()
@@ -171,3 +184,7 @@ public class Balle : MonoBehaviour
         tournerAction.Disable();
     }
 }
+
+
+
+
