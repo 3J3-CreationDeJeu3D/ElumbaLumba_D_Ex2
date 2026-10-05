@@ -12,7 +12,10 @@ public class Balle : MonoBehaviour
     [Header("État de jeu")]
     Vector3 positionBalle;
 
-    // [Header("Paramètres de tir")]
+    int points = 0;
+
+
+    [Header("Paramètres de tir")]
     [SerializeField] float angleTir;
     [SerializeField] float vitesseRotation;
     [SerializeField] float forceTir;
@@ -38,12 +41,18 @@ public class Balle : MonoBehaviour
     [SerializeField] AudioClip sonFin;
     [SerializeField] AudioClip sonErreur;
 
+    [Header("UI")]
+    [SerializeField] TMP_Text textePoints;
+
 
     void Start()
     {
         rigidbodyBalle = GetComponent<Rigidbody>();
         lineRendererBalle = GetComponent<LineRenderer>();
         audioSourceBalle = GetComponent<AudioSource>();
+
+        points = 0;
+        textePoints.text = $"Coups: {points}";
 
     }
 
@@ -84,7 +93,10 @@ public class Balle : MonoBehaviour
 
         if (tirAction.WasReleasedThisFrame())
         {
-           positionBalle = transform.position;
+            points++;
+            textePoints.text = $"Coups: {points}";
+            
+            positionBalle = transform.position;
             rigidbodyBalle.AddForce(direction * forceTir * Time.deltaTime, ForceMode.Impulse);
             forceTir = 0;
             MettreAJourUI();
