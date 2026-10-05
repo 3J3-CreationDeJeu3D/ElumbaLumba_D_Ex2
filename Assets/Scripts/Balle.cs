@@ -17,11 +17,13 @@ public class Balle : MonoBehaviour
     [SerializeField] float vitesseRotation;
     [SerializeField] float forceTir;
     Rigidbody rigidbodyBalle;
+    LineRenderer lineRendererBalle;
+
+ 
 
 
 
-
-    // [Header("Gauge de force")]
+    [Header("Gauge de force")]
     [SerializeField] Slider jaugeForce;
 
 
@@ -37,14 +39,29 @@ public class Balle : MonoBehaviour
     void Start()
     {
         rigidbodyBalle = GetComponent<Rigidbody>();
+        lineRendererBalle = GetComponent<LineRenderer>();
 
     }
 
     void Update()
     {
+
+        if (rigidbodyBalle.linearVelocity.magnitude > 0.1f)
+        {
+            lineRendererBalle.enabled = false;
+            
+        }
+        else
+        {
+            lineRendererBalle.enabled  = true;
+        }
         float inputRotation = tournerAction.ReadValue<float>();
-        Debug.Log(inputRotation);
+
         angleTir += inputRotation;
+
+        Vector3 direction = Quaternion.Euler(0, angleTir,0) * Vector3.forward;
+        lineRendererBalle.SetPosition(0, transform.position);
+        lineRendererBalle.SetPosition(1, transform.position + direction);
 
         if (tirAction.WasPressedThisFrame())
         {
@@ -64,7 +81,7 @@ public class Balle : MonoBehaviour
         if (tirAction.WasReleasedThisFrame())
         {
            
-            rigidbodyBalle.AddForce(Vector3.forward * forceTir * Time.deltaTime, ForceMode.Impulse);
+            rigidbodyBalle.AddForce(direction * forceTir * Time.deltaTime, ForceMode.Impulse);
             forceTir = 0;
             MettreAJourUI();
         }
