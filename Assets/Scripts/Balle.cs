@@ -62,11 +62,9 @@ public class Balle : MonoBehaviour
     void Update()
     {
 
-       if (peutJouer == true)
+       if (peutJouer == true && GestJeu.instance.etat == EtatJeu.Jeu)
         {
-            
         float inputRotation = tournerAction.ReadValue<float>();
-
         angleTir += inputRotation;
 
         Vector3 direction = Quaternion.Euler(0, angleTir,0) * Vector3.forward;
@@ -112,13 +110,6 @@ public class Balle : MonoBehaviour
         {
             yield return null;
         }
-        yield return new WaitUntil(() =>
-        {
-            return rigidbodyBalle.linearVelocity.magnitude > 0.1f;
-            
-        });
-
-
 
         peutJouer = true;
         Vector3 direction = Quaternion.Euler(0, angleTir,0) * Vector3.forward;
@@ -137,6 +128,7 @@ public class Balle : MonoBehaviour
             transform.position = positionBalle;
             //Déclancher le son
             audioSourceBalle.PlayOneShot(sonErreur);
+            GestJeu.instance.FinJeu();
         }
 
     }
@@ -146,8 +138,11 @@ public class Balle : MonoBehaviour
         if(collision.gameObject.tag == "trou")
         {
             rigidbodyBalle.linearVelocity = Vector3.zero;
+            rigidbodyBalle.useGravity = false;
             transform.position = collision.transform.position;
+            // Déclencher un son
             audioSourceBalle.PlayOneShot(sonFin);
+            StartCoroutine(GestJeu.instance.FinJeu());
         }
 
     }

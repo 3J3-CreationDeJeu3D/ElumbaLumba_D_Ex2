@@ -835,7 +835,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 200
+  m_MaxValue: 300
   m_WholeNumbers: 0
   m_Value: 2
   m_OnValueChanged:
@@ -2804,6 +2804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dd260477b4fd3447b207f9c15b85f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Balle
+  peutJouer: 1
   angleTir: 0
   vitesseRotation: 0
   forceTir: 0
@@ -4586,7 +4587,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -4.759224, y: 0}
+  m_AnchoredPosition: {x: -4.7592163, y: 0}
   m_SizeDelta: {x: 0.4817, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2120891985
