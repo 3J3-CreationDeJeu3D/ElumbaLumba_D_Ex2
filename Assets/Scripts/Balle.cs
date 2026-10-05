@@ -13,13 +13,17 @@ public class Balle : MonoBehaviour
 
 
     // [Header("Paramètres de tir")]
+    [SerializeField] float angleTir;
+    [SerializeField] float vitesseRotation;
 
 
 
     // [Header("Gauge de force")]
 
 
-    // [Header("Input Actions")]
+    [Header("Input Actions")]
+    [SerializeField] InputAction tirAction;
+    [SerializeField] InputAction tournerAction;
 
 
 
@@ -33,6 +37,22 @@ public class Balle : MonoBehaviour
 
     void Update()
     {
+        float inputRotation = tournerAction.ReadValue<float>();
+        
+        if (tirAction.WasPressedThisFrame())
+        {
+            Debug.Log("Enfoncé une fois");
+        }
+
+        if (tirAction.IsPressed())
+        {
+            Debug.Log("Enfoncé constamment");
+        }
+
+        if (tirAction.WasReleasedThisFrame())
+        {
+            Debug.Log("Relâché");
+        }
 
 
     }
@@ -71,11 +91,15 @@ public class Balle : MonoBehaviour
     // Gestion des inputs actions
     void OnEnable()
     {
+        tirAction.Enable();
+        tournerAction.Enable();
 
     }
 
     void OnDisable()
     {
+        tirAction.Disable();
+        tournerAction.Disable();
 
     }
 }
