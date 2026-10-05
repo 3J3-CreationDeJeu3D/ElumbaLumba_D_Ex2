@@ -22,6 +22,7 @@ public class Balle : MonoBehaviour
 
 
     // [Header("Gauge de force")]
+    [SerializeField] Slider jaugeForce;
 
 
     [Header("Input Actions")]
@@ -47,22 +48,25 @@ public class Balle : MonoBehaviour
 
         if (tirAction.WasPressedThisFrame())
         {
-            Debug.Log("Enfoncé une fois");
+            
             forceTir = 0;
+            MettreAJourUI();
         }
 
         if (tirAction.IsPressed())
         {
-            Debug.Log("Enfoncé constamment");
+            
              forceTir += 1;
-             forceTir = Mathf.Clamp(forceTir,0, 100f);
+             forceTir = Mathf.Clamp(forceTir, jaugeForce.minValue, jaugeForce.maxValue);
+             MettreAJourUI();
         }
 
         if (tirAction.WasReleasedThisFrame())
         {
-            Debug.Log("Relâché");
+           
             rigidbodyBalle.AddForce(Vector3.forward * forceTir * Time.deltaTime, ForceMode.Impulse);
             forceTir = 0;
+            MettreAJourUI();
         }
 
 
@@ -86,6 +90,7 @@ public class Balle : MonoBehaviour
 
     void MettreAJourUI()
     {
+        jaugeForce.value = forceTir;
     }
 
     // IEnumerator FinJeu()
