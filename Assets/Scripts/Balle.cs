@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class Balle : MonoBehaviour
 {
@@ -32,13 +33,17 @@ public class Balle : MonoBehaviour
 
 
 
-    // [Header("Composant")]
+    [Header("Sons")]
+    AudioSource audioSourceBalle;
+    [SerializeField] AudioClip sonFin;
+    [SerializeField] AudioClip sonErreur;
 
 
     void Start()
     {
         rigidbodyBalle = GetComponent<Rigidbody>();
         lineRendererBalle = GetComponent<LineRenderer>();
+        audioSourceBalle = GetComponent<AudioSource>();
 
     }
 
@@ -97,6 +102,7 @@ public class Balle : MonoBehaviour
             rigidbodyBalle.linearVelocity = Vector3.zero;
             transform.position = positionBalle;
             //Déclancher le son
+            audioSourceBalle.PlayOneShot(sonErreur);
         }
 
     }
@@ -107,7 +113,7 @@ public class Balle : MonoBehaviour
         {
             rigidbodyBalle.linearVelocity = Vector3.zero;
             transform.position = collision.transform.position;
-            //Déclancher un son
+            audioSourceBalle.PlayOneShot(sonFin);
         }
 
     }
