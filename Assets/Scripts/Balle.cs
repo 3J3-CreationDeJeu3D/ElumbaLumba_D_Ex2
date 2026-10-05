@@ -57,6 +57,12 @@ public class Balle : MonoBehaviour
         textePoints.text = $"Coups: {points}";
         peutJouer = true;
 
+        if (PlayerPrefs.HasKey("positionBalle"))
+        {
+             string positionJSON = PlayerPrefs.GetString("positionBalle");
+             transform.position = JsonUtility.FromJson<Vector3>(positionJSON);
+        }
+
     }
 
     void Update()
@@ -92,6 +98,10 @@ public class Balle : MonoBehaviour
             textePoints.text = $"Coups: {points}";
 
             positionBalle = transform.position;
+
+            string positionJSON = JsonUtility.ToJson(positionBalle);
+            PlayerPrefs.SetString("positionBalle", positionJSON);
+
             rigidbodyBalle.AddForce(direction * forceTir * Time.deltaTime, ForceMode.Impulse);
             StartCoroutine(VerifierApresTir());
             forceTir = 0;
@@ -142,6 +152,9 @@ public class Balle : MonoBehaviour
             transform.position = collision.transform.position;
             // Déclencher un son
             audioSourceBalle.PlayOneShot(sonFin);
+
+            PlayerPrefs.SetInt("NbCoups", points);
+            PlayerPrefs.DeleteKey("positionBalle");
             StartCoroutine(GestJeu.instance.FinJeu());
         }
 
