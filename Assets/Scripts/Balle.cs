@@ -8,9 +8,8 @@ using UnityEngine.SceneManagement;
 public class Balle : MonoBehaviour
 {
 
-    // [Header("État de jeu")]
-
-
+    [Header("État de jeu")]
+    Vector3 positionBalle;
 
     // [Header("Paramètres de tir")]
     [SerializeField] float angleTir;
@@ -80,7 +79,7 @@ public class Balle : MonoBehaviour
 
         if (tirAction.WasReleasedThisFrame())
         {
-           
+           positionBalle = transform.position;
             rigidbodyBalle.AddForce(direction * forceTir * Time.deltaTime, ForceMode.Impulse);
             forceTir = 0;
             MettreAJourUI();
@@ -91,11 +90,25 @@ public class Balle : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag == "terrain")
+        {
+        
+            //Replacer balle
+            rigidbodyBalle.linearVelocity = Vector3.zero;
+            transform.position = positionBalle;
+            //Déclancher le son
+        }
 
     }
 
     void OnTriggerEnter(Collider collision)
     {
+        if(collision.gameObject.tag == "trou")
+        {
+            rigidbodyBalle.linearVelocity = Vector3.zero;
+            transform.position = collision.transform.position;
+            //Déclancher un son
+        }
 
     }
 
