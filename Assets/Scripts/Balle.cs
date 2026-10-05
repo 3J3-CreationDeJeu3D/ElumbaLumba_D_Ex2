@@ -5,6 +5,7 @@ using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using System.Globalization;
 
 public class Balle : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Balle : MonoBehaviour
     Vector3 positionBalle;
 
     int points = 0;
+    [SerializeField] bool peutJouer;
 
 
     [Header("Paramètres de tir")]
@@ -53,21 +55,16 @@ public class Balle : MonoBehaviour
 
         points = 0;
         textePoints.text = $"Coups: {points}";
+        peutJouer = true;
 
     }
 
     void Update()
     {
 
-        if (rigidbodyBalle.linearVelocity.magnitude > 0.1f)
+       if (peutJouer == true)
         {
-            lineRendererBalle.enabled = false;
             
-        }
-        else
-        {
-            lineRendererBalle.enabled  = true;
-        }
         float inputRotation = tournerAction.ReadValue<float>();
 
         angleTir += inputRotation;
@@ -95,14 +92,39 @@ public class Balle : MonoBehaviour
         {
             points++;
             textePoints.text = $"Coups: {points}";
-            
+
             positionBalle = transform.position;
             rigidbodyBalle.AddForce(direction * forceTir * Time.deltaTime, ForceMode.Impulse);
+            StartCoroutine(VerifierApresTir());
             forceTir = 0;
             MettreAJourUI();
         }
+      }
+    }
+
+    IEnumerator VerifierApresTir()
+    {
+        peutJouer = false;
+        lineRendererBalle.enabled = false;
+        yield return new WaitForFixedUpdate();
+
+        while(rigidbodyBalle.linearVelocity.magnitude>0.1f)
+        {
+            yield return null;
+        }
+        yield return new WaitUntil(() =>
+        {
+            return rigidbodyBalle.linearVelocity.magnitude > 0.1f;
+            
+        });
 
 
+
+        peutJouer = true;
+        Vector3 direction = Quaternion.Euler(0, angleTir,0) * Vector3.forward;
+        lineRendererBalle.SetPosition(0, transform.position);
+        lineRendererBalle.SetPosition(1, transform.position + direction);
+        lineRendererBalle.enabled = true;  
     }
 
     void OnCollisionEnter(Collision collision)
@@ -167,3 +189,4 @@ public class Balle : MonoBehaviour
 
     }
 }
+
