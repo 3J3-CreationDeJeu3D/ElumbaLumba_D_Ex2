@@ -15,6 +15,9 @@ public class Balle : MonoBehaviour
     // [Header("Paramètres de tir")]
     [SerializeField] float angleTir;
     [SerializeField] float vitesseRotation;
+    [SerializeField] float forceTir;
+    Rigidbody rigidbodyBalle;
+
 
 
 
@@ -32,26 +35,34 @@ public class Balle : MonoBehaviour
 
     void Start()
     {
+        rigidbodyBalle = GetComponent<Rigidbody>();
 
     }
 
     void Update()
     {
         float inputRotation = tournerAction.ReadValue<float>();
-        
+        Debug.Log(inputRotation);
+        angleTir += inputRotation;
+
         if (tirAction.WasPressedThisFrame())
         {
             Debug.Log("Enfoncé une fois");
+            forceTir = 0;
         }
 
         if (tirAction.IsPressed())
         {
             Debug.Log("Enfoncé constamment");
+             forceTir += 1;
+             forceTir = Mathf.Clamp(forceTir,0, 100f);
         }
 
         if (tirAction.WasReleasedThisFrame())
         {
             Debug.Log("Relâché");
+            rigidbodyBalle.AddForce(Vector3.forward * forceTir * Time.deltaTime, ForceMode.Impulse);
+            forceTir = 0;
         }
 
 
