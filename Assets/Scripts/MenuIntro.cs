@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+<<<<<<< HEAD
 using TMPro;
 
 public class MenuIntro : MonoBehaviour
@@ -16,5 +17,12 @@ public class MenuIntro : MonoBehaviour
     public void DemarrerJeu()
     {
         SceneManager.LoadScene("Jeu");
+=======
+
+public class MenuIntro : MonoBehaviour
+{
+    public void Demarrer()
+    {
+>>>>>>> e1dac66918cd6cd9fe0974aa123455c8823df7da
     }
 }

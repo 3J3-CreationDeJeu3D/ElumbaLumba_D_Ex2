@@ -4,12 +4,16 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
+<<<<<<< HEAD
 using Unity.VisualScripting;
 using System.Globalization;
+=======
+>>>>>>> e1dac66918cd6cd9fe0974aa123455c8823df7da
 
 public class Balle : MonoBehaviour
 {
 
+<<<<<<< HEAD
     [Header("État de jeu")]
     Vector3 positionBalle;
 
@@ -45,10 +49,29 @@ public class Balle : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] TMP_Text textePoints;
+=======
+    // [Header("État de jeu")]
+
+
+
+    // [Header("Paramètres de tir")]
+
+
+
+    // [Header("Gauge de force")]
+
+
+    // [Header("Input Actions")]
+
+
+
+    // [Header("Composant")]
+>>>>>>> e1dac66918cd6cd9fe0974aa123455c8823df7da
 
 
     void Start()
     {
+<<<<<<< HEAD
         rigidbodyBalle = GetComponent<Rigidbody>();
         lineRendererBalle = GetComponent<LineRenderer>();
         audioSourceBalle = GetComponent<AudioSource>();
@@ -62,12 +85,15 @@ public class Balle : MonoBehaviour
              string positionJSON = PlayerPrefs.GetString("positionBalle");
              transform.position = JsonUtility.FromJson<Vector3>(positionJSON);
         }
+=======
+>>>>>>> e1dac66918cd6cd9fe0974aa123455c8823df7da
 
     }
 
     void Update()
     {
 
+<<<<<<< HEAD
        if (peutJouer == true && GestJeu.instance.etat == EtatJeu.Jeu)
         {
         float inputRotation = tournerAction.ReadValue<float>();
@@ -126,10 +152,14 @@ public class Balle : MonoBehaviour
         lineRendererBalle.SetPosition(0, transform.position);
         lineRendererBalle.SetPosition(1, transform.position + direction);
         lineRendererBalle.enabled = true;  
+=======
+
+>>>>>>> e1dac66918cd6cd9fe0974aa123455c8823df7da
     }
 
     void OnCollisionEnter(Collision collision)
     {
+<<<<<<< HEAD
         if (collision.gameObject.tag == "terrain")
         {
         
@@ -140,11 +170,14 @@ public class Balle : MonoBehaviour
             audioSourceBalle.PlayOneShot(sonErreur);
             GestJeu.instance.FinJeu();
         }
+=======
+>>>>>>> e1dac66918cd6cd9fe0974aa123455c8823df7da
 
     }
 
     void OnTriggerEnter(Collider collision)
     {
+<<<<<<< HEAD
         if(collision.gameObject.tag == "trou")
         {
             rigidbodyBalle.linearVelocity = Vector3.zero;
@@ -157,6 +190,8 @@ public class Balle : MonoBehaviour
             PlayerPrefs.DeleteKey("positionBalle");
             StartCoroutine(GestJeu.instance.FinJeu());
         }
+=======
+>>>>>>> e1dac66918cd6cd9fe0974aa123455c8823df7da
 
     }
 
@@ -168,7 +203,10 @@ public class Balle : MonoBehaviour
 
     void MettreAJourUI()
     {
+<<<<<<< HEAD
         jaugeForce.value = forceTir;
+=======
+>>>>>>> e1dac66918cd6cd9fe0974aa123455c8823df7da
     }
 
     // IEnumerator FinJeu()
@@ -185,16 +223,25 @@ public class Balle : MonoBehaviour
     // Gestion des inputs actions
     void OnEnable()
     {
+<<<<<<< HEAD
         tirAction.Enable();
         tournerAction.Enable();
+=======
+>>>>>>> e1dac66918cd6cd9fe0974aa123455c8823df7da
 
     }
 
     void OnDisable()
     {
+<<<<<<< HEAD
         tirAction.Disable();
         tournerAction.Disable();
 
     }
 }
 
+=======
+
+    }
+}
+>>>>>>> e1dac66918cd6cd9fe0974aa123455c8823df7da
